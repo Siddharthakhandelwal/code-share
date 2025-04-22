@@ -6,8 +6,11 @@
       "use": "@vercel/node"
     },
     {
-      "src": "build/**",
-      "use": "@vercel/static"
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
     }
   ],
   "routes": [
@@ -20,8 +23,27 @@
       "dest": "server.js"
     },
     {
+      "src": "/static/(.*)",
+      "dest": "/build/static/$1"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "/build/favicon.ico"
+    },
+    {
+      "src": "/manifest.json",
+      "dest": "/build/manifest.json"
+    },
+    {
+      "src": "/logo.png",
+      "dest": "/build/logo.png"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
       "src": "/(.*)",
-      "dest": "build/$1"
+      "dest": "server.js"
     }
   ]
 }
